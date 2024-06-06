@@ -22,7 +22,6 @@
 # unique random secure passwords and SECRET_KEY.
 # -----------------------------------------------------------------------
 x-superset-depends-on: &superset-depends-on
-  - db
   - redis
 x-superset-volumes:
   &superset-volumes # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
@@ -44,25 +43,9 @@ services:
     volumes:
       - redis:/data
 
-  db:
-    env_file:
-      - path: docker/.env # default
-        required: true
-      - path: docker/.env-local # optional override
-        required: false
-    image: postgres:15
-    container_name: superset_db
-    restart: unless-stopped
-    volumes:
-      - db_home:/var/lib/postgresql/data
-      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-
   superset:
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: docker/.env-local # optional override
-        required: false
+      - stack.env
     build:
       <<: *common-build
     container_name: superset_app
@@ -80,10 +63,7 @@ services:
       <<: *common-build
     command: ["/app/docker/docker-init.sh"]
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: docker/.env-local # optional override
-        required: false
+      - stack.env
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
@@ -96,10 +76,7 @@ services:
     container_name: superset_worker
     command: ["/app/docker/docker-bootstrap.sh", "worker"]
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: docker/.env-local # optional override
-        required: false
+      - stack.env
     restart: unless-stopped
     depends_on: *superset-depends-on
     user: "root"
@@ -117,10 +94,7 @@ services:
     container_name: superset_worker_beat
     command: ["/app/docker/docker-bootstrap.sh", "beat"]
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: docker/.env-local # optional override
-        required: false
+      - stack.env
     restart: unless-stopped
     depends_on: *superset-depends-on
     user: "root"
