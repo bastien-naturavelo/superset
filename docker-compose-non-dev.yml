@@ -51,7 +51,7 @@ services:
     build:
       <<: *common-build
     container_name: superset_app
-    command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
+    command: ["/docker/docker-bootstrap.sh", "app-gunicorn"]
     user: "root"
     restart: unless-stopped
     ports:
@@ -65,7 +65,7 @@ services:
     container_name: superset_init
     build:
       <<: *common-build
-    command: ["/app/docker/docker-init.sh"]
+    command: ["/docker/docker-init.sh"]
     env_file:
       - stack.env
     depends_on: *superset-depends-on
@@ -80,7 +80,7 @@ services:
     build:
       <<: *common-build
     container_name: superset_worker
-    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+    command: ["/docker/docker-bootstrap.sh", "worker"]
     env_file:
       - stack.env
     restart: unless-stopped
@@ -100,7 +100,7 @@ services:
     build:
       <<: *common-build
     container_name: superset_worker_beat
-    command: ["/app/docker/docker-bootstrap.sh", "beat"]
+    command: ["/docker/docker-bootstrap.sh", "beat"]
     env_file:
       - stack.env
     restart: unless-stopped
