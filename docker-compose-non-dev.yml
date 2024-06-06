@@ -42,6 +42,8 @@ services:
     restart: unless-stopped
     volumes:
       - redis:/data
+    networks:
+      - app_network
 
   superset:
     env_file:
@@ -56,6 +58,8 @@ services:
       - 8088:8088
     depends_on: *superset-depends-on
     volumes: *superset-volumes
+    networks:
+      - app_network
 
   superset-init:
     container_name: superset_init
@@ -67,6 +71,8 @@ services:
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
+    networks:
+      - app_network
     healthcheck:
       disable: true
 
@@ -81,6 +87,8 @@ services:
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
+    networks:
+      - app_network
     healthcheck:
       test:
         [
@@ -99,6 +107,8 @@ services:
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
+    networks:
+      - app_network
     healthcheck:
       disable: true
 
@@ -109,3 +119,8 @@ volumes:
     external: false
   redis:
     external: false
+    
+networks:
+  app_network:
+    external: true
+    name: app_network
