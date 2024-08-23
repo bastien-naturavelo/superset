@@ -32,7 +32,7 @@ services:
       - path: docker/.env # default
         required: true
       - path: stack.env # optional override
-        required: false
+        required: true
     build:
       <<: *common-build
     container_name: superset_app
