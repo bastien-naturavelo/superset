@@ -31,7 +31,7 @@ services:
     env_file:
       - path: docker/.env # default
         required: true
-      - path: docker/.env-local # optional override
+      - path: stack.env # optional override
         required: false
     build:
       <<: *common-build
