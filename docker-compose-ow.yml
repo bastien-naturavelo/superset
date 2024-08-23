@@ -49,10 +49,7 @@ services:
       <<: *common-build
     command: ["/app/docker/docker-init.sh"]
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: stack.env
-        required: false
+      - stack.env
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
@@ -67,10 +64,7 @@ services:
     container_name: superset_worker
     command: ["/app/docker/docker-bootstrap.sh", "worker"]
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: docker/.env-local # optional override
-        required: false
+      - stack.env
     restart: unless-stopped
     depends_on: *superset-depends-on
     user: "root"
@@ -90,10 +84,7 @@ services:
     container_name: superset_worker_beat
     command: ["/app/docker/docker-bootstrap.sh", "beat"]
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: docker/.env-local # optional override
-        required: false
+      - stack.env
     restart: unless-stopped
     depends_on: *superset-depends-on
     user: "root"
