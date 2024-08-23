@@ -30,7 +30,6 @@ services:
       <<: *common-build
     container_name: superset_app
     command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
-    user: "root"
     restart: unless-stopped
     ports:
       - 8088:8088
@@ -47,7 +46,6 @@ services:
     env_file:
       - stack.env
     depends_on: *superset-depends-on
-    user: "root"
     volumes: *superset-volumes
     healthcheck:
       disable: true
@@ -63,7 +61,6 @@ services:
       - stack.env
     restart: unless-stopped
     depends_on: *superset-depends-on
-    user: "root"
     volumes: *superset-volumes
     healthcheck:
       test:
@@ -83,7 +80,6 @@ services:
       - stack.env
     restart: unless-stopped
     depends_on: *superset-depends-on
-    user: "root"
     volumes: *superset-volumes
     healthcheck:
       disable: true
