@@ -29,8 +29,7 @@ services:
 
   superset:
     env_file:
-      - path: stack.env
-        required: true
+      - stack.env
     build:
       <<: *common-build
     container_name: superset_app
