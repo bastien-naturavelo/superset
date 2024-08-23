@@ -29,9 +29,7 @@ services:
 
   superset:
     env_file:
-      - path: docker/.env # default
-        required: true
-      - path: stack.env # optional override
+      - path: stack.env
         required: true
     build:
       <<: *common-build
